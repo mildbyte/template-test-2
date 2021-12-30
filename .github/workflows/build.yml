@@ -17,8 +17,12 @@ jobs:
       shell: bash
       env:
         CREDENTIALS_YML: ${{secrets.SPLITGRAPH_CREDENTIALS_YML}}
+    - name: Run sgr cloud sync to perform the data load into a private repo
+      run: sgr cloud sync --remote splitgraph --initial-private --use-file -f splitgraph.yml
+        -f splitgraph.credentials.yml --wait mildbyte/airbyte-sendgrid
+      shell: bash
     - name: Run sgr cloud load to set up metadata
-      run: sgr --verbosity DEBUG cloud load --remote splitgraph --initial-private -f splitgraph.yml -f
+      run: sgr cloud load --remote splitgraph --skip-external -f splitgraph.yml -f
         splitgraph.credentials.yml mildbyte/airbyte-sendgrid
       shell: bash
   mildbyte_csv:
@@ -38,8 +42,8 @@ jobs:
       env:
         CREDENTIALS_YML: ${{secrets.SPLITGRAPH_CREDENTIALS_YML}}
     - name: Run sgr cloud load to set up metadata and data source settings
-      run: sgr cloud load --remote splitgraph -f splitgraph.yml -f splitgraph.credentials.yml
-        mildbyte/csv
+      run: sgr cloud load --remote splitgraph --initial-private -f splitgraph.yml
+        -f splitgraph.credentials.yml mildbyte/csv
       shell: bash
   mildbyte_dbt_sample:
     name: Build mildbyte/dbt-sample
