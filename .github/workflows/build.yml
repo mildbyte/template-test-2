@@ -22,7 +22,7 @@ jobs:
         -f splitgraph.credentials.yml --wait mildbyte/airbyte-sendgrid
       shell: bash
     - name: Run sgr cloud load to set up metadata
-      run: sgr cloud load --remote splitgraph --skip-external -f splitgraph.yml -f
+      run: sgr --verbosity DEBUG cloud load --remote splitgraph --skip-external -f splitgraph.yml -f
         splitgraph.credentials.yml mildbyte/airbyte-sendgrid
       shell: bash
   mildbyte_csv:
