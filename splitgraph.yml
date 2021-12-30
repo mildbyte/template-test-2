@@ -73,6 +73,7 @@ repositories:
     plugin: dbt
     credential: dbt-sample
     params:
+      git_branch: "$THIS_SHA"
       sources:
       - dbt_source_name: mildbyte_airbyte_sendgrid
         namespace: mildbyte
